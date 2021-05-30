@@ -1,10 +1,7 @@
 import { ReactNode } from 'react';
 
-export interface NavigationItems {
-    text: NaviationTitles,
-    path: NaviationPaths,
-    icon: ReactNode
-}
+export const APP_NAME = 'Ultimate Moviegoers Guide';
+export const SIDE_DRAWER_WIDTH = 240;
 
 export enum NaviationTitles {
     DETAILS = 'Details',
@@ -22,5 +19,8 @@ export enum NaviationPaths {
     SEARCH = '/search'
 }
 
-export const APP_NAME = 'Ultimate Moviegoers Guide';
-
+export interface NavigationItems {
+    text: NaviationTitles,
+    path: NaviationPaths,
+    icon: ReactNode
+}
