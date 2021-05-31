@@ -33,7 +33,7 @@ const Popular = () => {
 
     return (
         <Container>
-            <Typography className={style.pageTitle} variant="h4"> {pageName} </Typography>
+            <Typography className={style.pageTitle} variant="h5"> {pageName} </Typography>
             <MovieList movies={popularMovies} handleSelect={handleMovieSelect}></MovieList>
         </Container>
     )

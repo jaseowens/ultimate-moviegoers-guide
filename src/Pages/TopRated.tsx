@@ -33,7 +33,7 @@ const TopRated = () => {
 
     return (
         <Container>
-            <Typography className={style.pageTitle} variant="h4"> {pageName} </Typography>
+            <Typography className={style.pageTitle} variant="h5"> {pageName} </Typography>
             <MovieList movies={topRatedMovies} handleSelect={handleMovieSelect}></MovieList>
         </Container>
     )

@@ -18,6 +18,9 @@ const TOP_RATED_URL = `${API_BASE_URL}/movie/top_rated`;
 // https://developers.themoviedb.org/3/movies/get-movie-details
 const DETAILS_URL = `${API_BASE_URL}/movie/`
 
+// https://developers.themoviedb.org/3/search/search-movies
+const SEARCH_URL = `${API_BASE_URL}/search/movie`
+
 export const getPopularMovies = async (): Promise<MovieSearchResult[]> => {
     console.log('FETCHING');
     return await axios.get(POPULAR_URL, {
@@ -90,6 +93,28 @@ export const getMovieDetails = async (id: string): Promise<MovieDetails> => {
         if(res?.data) {
             console.log(res.data);
             return res.data;
+        } else {
+            return {};
+        }
+    }).catch(err => {
+        console.log('ERR! ');
+        console.log(err);
+        return {};
+    });
+}
+
+export const getSearchResults = async (searchTerm: string): Promise<MovieSearchResult[]> => {
+    console.log('Getting search');
+    return await axios.get(SEARCH_URL, {
+        params: {
+            api_key: API_KEY,
+            language: LANGUAGE,
+            query: searchTerm
+        }
+    }).then(res => {
+        if(res?.data?.results) {
+            console.log(res.data.results);
+            return res.data.results;
         } else {
             return {};
         }
