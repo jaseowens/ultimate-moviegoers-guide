@@ -3,7 +3,8 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import NowPlaying from './Pages/NowPlaying';
 import Popular from './Pages/Popular';
 import TopRated from './Pages/TopRated';
-import { Details, Search } from '@material-ui/icons';
+import Details from './Pages/Details';
+import Search from './Pages/Search';
 import Layout from './Components/Layout';
 import { NaviationPaths } from './Helpers/Constants';
 import { ThemeProvider } from '@material-ui/styles';
@@ -29,7 +30,7 @@ function App() {
               <TopRated></TopRated>
             </Route>
 
-            <Route path={NaviationPaths.DETAILS}>
+            <Route path={NaviationPaths.DETAILS + '/:id'}>
               <Details></Details>
             </Route>
 

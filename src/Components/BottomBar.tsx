@@ -17,7 +17,7 @@ const BottomBar = (props: {navItems: NavigationItems[]}) => {
         >
 
             {props.navItems.map(navigationItem => (
-                <BottomNavigationAction color='secondary' label={navigationItem.text} icon={navigationItem.icon} onClick={() => history.push(navigationItem.path)} />
+                <BottomNavigationAction key={navigationItem.path} color='secondary' label={navigationItem.text} icon={navigationItem.icon} onClick={() => history.push(navigationItem.path)} />
             ))}
             
         </BottomNavigation>

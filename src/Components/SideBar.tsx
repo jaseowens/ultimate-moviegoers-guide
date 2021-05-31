@@ -3,6 +3,7 @@ import { ChevronLeft } from "@material-ui/icons";
 import { useHistory } from "react-router";
 import { NavigationItems, SIDE_DRAWER_WIDTH } from "../Helpers/Constants";
 import clsx from 'clsx';
+import { useLocation } from "react-router-dom";
 
 const useStyle = makeStyles((theme) => ({
     drawer: {
@@ -53,32 +54,36 @@ const useStyle = makeStyles((theme) => ({
     },
     listItemText: {
         margin: 0
+    },
+    active: {
+        color: theme.palette.primary.main
     }
 }));
 
 const SideBar = (props: {isOpen: boolean, handleDrawerClose: any, navItems: NavigationItems[]}) => {
     const style = useStyle();
     const history = useHistory();
+    const location = useLocation();
 
     return(
         <Drawer
-        variant="permanent"
-        className={clsx(style.drawer, {
-          [style.drawerOpen]: props.isOpen,
-          [style.drawerClose]: !props.isOpen,
-        })}
-        classes={{
-          paper: clsx({
-            [style.drawerOpen]: props.isOpen,
-            [style.drawerClose]: !props.isOpen,
-          }),
-        }}
-      >
-        <div className={style.toolbar}>
-          <IconButton onClick={props.handleDrawerClose}>
-            {<ChevronLeft />}
-          </IconButton>
-        </div>
+            variant="permanent"
+            className={clsx(style.drawer, {
+                [style.drawerOpen]: props.isOpen,
+                [style.drawerClose]: !props.isOpen,
+            })}
+            classes={{
+                paper: clsx({
+                    [style.drawerOpen]: props.isOpen,
+                    [style.drawerClose]: !props.isOpen,
+                }),
+            }}
+        >
+            <div className={style.toolbar}>
+            <IconButton onClick={props.handleDrawerClose}>
+                {<ChevronLeft />}
+            </IconButton>
+            </div>
 
         <Divider />
 
@@ -86,7 +91,7 @@ const SideBar = (props: {isOpen: boolean, handleDrawerClose: any, navItems: Navi
             {props.navItems.map(navigationItem => (
 
                 <ListItem button className={style.listItem} key={navigationItem.path} onClick={() => history.push(navigationItem.path)} >
-                    <ListItemIcon>
+                    <ListItemIcon className={(location.pathname === navigationItem.path ? style.active : '')}>
                         {navigationItem.icon}
                     </ListItemIcon>
                     {props.isOpen && <ListItemText className={style.listItemText} secondary={navigationItem.text} /> }

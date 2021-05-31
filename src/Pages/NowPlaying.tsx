@@ -3,6 +3,8 @@ import { getNowPlayingMovies } from "../Services/tmdbAPI";
 import { MovieSearchResult } from "../Services/tmdbDTO";
 import MovieList from "../Components/MovieList";
 import { Container, makeStyles, Typography } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
+import { NaviationPaths } from "../Helpers/Constants";
 
 const useStyle = makeStyles((theme) => ({
     pageTitle: {
@@ -12,9 +14,10 @@ const useStyle = makeStyles((theme) => ({
 }));
 
 const NowPlaying = () => {
-    const [nowPlayingMovies, setNowPlayingMovies] = useState<MovieSearchResult[]>([]);
     const pageName = 'Now Playing';
+    const [nowPlayingMovies, setNowPlayingMovies] = useState<MovieSearchResult[]>([]);
     const style = useStyle();
+    const history = useHistory();
 
     useEffect(() => {
         const fetchNowPlaying = async () => {
@@ -24,10 +27,14 @@ const NowPlaying = () => {
         fetchNowPlaying();
     }, []);
 
+    const handleMovieSelect = (movie: MovieSearchResult) => {
+        history.push(`${NaviationPaths.DETAILS}/${movie.id}`)
+    }
+
     return (
         <Container>
             <Typography className={style.pageTitle} variant="h5"> {pageName} </Typography>
-            <MovieList movies={nowPlayingMovies}></MovieList>
+            <MovieList movies={nowPlayingMovies} handleSelect={handleMovieSelect}></MovieList>
         </Container>
     )
 }

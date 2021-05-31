@@ -1,4 +1,4 @@
-import { MovieSearchResult } from './tmdbDTO';
+import { MovieDetails, MovieSearchResult } from './tmdbDTO';
 import axios from "axios";
 
 const LANGUAGE = 'en_US';
@@ -14,6 +14,9 @@ const NOW_PLAYING_URL = `${API_BASE_URL}/movie/now_playing`;
 
 // https://developers.themoviedb.org/3/movies/get-top-rated-movies
 const TOP_RATED_URL = `${API_BASE_URL}/movie/top_rated`;
+
+// https://developers.themoviedb.org/3/movies/get-movie-details
+const DETAILS_URL = `${API_BASE_URL}/movie/`
 
 export const getPopularMovies = async (): Promise<MovieSearchResult[]> => {
     console.log('FETCHING');
@@ -73,6 +76,27 @@ export const getTopRatedMovies = async (): Promise<MovieSearchResult[]> => {
         console.log('ERR! ');
         console.log(err);
         return [];
+    });
+}
+
+export const getMovieDetails = async (id: string): Promise<MovieDetails> => {
+    console.log('Getting details');
+    return await axios.get(DETAILS_URL + id, {
+        params: {
+            api_key: API_KEY,
+            language: LANGUAGE
+        }
+    }).then(res => {
+        if(res?.data) {
+            console.log(res.data);
+            return res.data;
+        } else {
+            return {};
+        }
+    }).catch(err => {
+        console.log('ERR! ');
+        console.log(err);
+        return {};
     });
 }
 

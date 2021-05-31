@@ -45,7 +45,7 @@ const useStyle = makeStyles((theme) => ({
 const Layout: FunctionComponent = ({ children }) => {
     const style = useStyle();
     const  breakpoint = useScreenWidth();
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = React.useState(false);
 
     const Navigation_Items: Array<NavigationItems> = [
         {
