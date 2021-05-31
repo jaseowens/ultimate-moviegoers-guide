@@ -5,9 +5,9 @@ import Popular from './Pages/Popular';
 import TopRated from './Pages/TopRated';
 import { Details, Search } from '@material-ui/icons';
 import Layout from './Components/Layout';
-import { NaviationPaths } from './Constants/Constants';
+import { NaviationPaths } from './Helpers/Constants';
 import { ThemeProvider } from '@material-ui/styles';
-import theme from './Constants/Theme';
+import theme from './Helpers/Theme';
 
 function App() {
   return (

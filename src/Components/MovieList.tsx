@@ -1,28 +1,38 @@
 
 import { MovieSearchResult } from "../Services/tmdbDTO";
-import { GridList, GridListTile, Theme, useMediaQuery } from "@material-ui/core";
+import { GridList, GridListTile } from "@material-ui/core";
 import { POSTER_BASE_URL } from "../Services/tmdbAPI";
+import { useScreenWidth } from "../Helpers/ScreenSize";
 
 const MovieList = (props: {movies: Array<MovieSearchResult>}) => {
-    const xs: boolean = useMediaQuery((theme: Theme) => theme.breakpoints.only('xs'));
-    const sm: boolean = useMediaQuery((theme: Theme) => theme.breakpoints.only('sm'));
-    const md: boolean = useMediaQuery((theme: Theme) => theme.breakpoints.only('md'));
+    const  breakpoint = useScreenWidth();
 
-    // Definitions for extra small, small and medium screen sizes, anything above medium is defaulted to 5 columns.
     const getCols = () => {
-        if(xs) {
-            return 2;
-        } else if (sm) {
-            return 3;
-        } else if(md) {
+        if(breakpoint === 'xs') {
             return 4;
+        } else if (breakpoint === 'sm') {
+            return 4;
+        } else if(breakpoint === 'md') {
+            return 5;
         } else {
             return 5;
         }
     }
 
+    const getCellHeight = () => {
+        if(breakpoint === 'xs') {
+            return 180;
+        } else if (breakpoint === 'sm') {
+            return 240;
+        } else if(breakpoint === 'md') {
+            return 300;
+        } else {
+            return 360;
+        }
+    }
+
     return (
-        <GridList cellHeight={360} cols={getCols()}>
+        <GridList cellHeight={getCellHeight()} cols={getCols()}>
             {props.movies.map((movie) => (
             <GridListTile key={movie.id} cols={1}>
                 <img src={POSTER_BASE_URL + movie.poster_path} alt={movie.title} height="auto" width="100%" />

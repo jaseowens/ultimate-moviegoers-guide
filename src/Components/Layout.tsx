@@ -1,11 +1,13 @@
-import { makeStyles, List, ListItem, ListItemText, Drawer, ListItemIcon, IconButton, Divider, Toolbar, AppBar } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 import { FunctionComponent } from "react";
-import { NaviationPaths, NaviationTitles, NavigationItems, SIDE_DRAWER_WIDTH } from '../Constants/Constants';
 import React from "react";
-import { ChevronLeft, SearchOutlined, SubjectOutlined } from "@material-ui/icons";
 import clsx from 'clsx';
 import TopBar from "./TopBar";
 import SideBar from "./SideBar";
+import { useScreenWidth } from "../Helpers/ScreenSize";
+import { PlayArrowRounded, BarChartOutlined, Whatshot, SearchOutlined } from "@material-ui/icons";
+import { NavigationItems, NaviationTitles, NaviationPaths } from "../Helpers/Constants";
+import BottomBar from "./BottomBar";
 
 const useStyle = makeStyles((theme) => ({
     root: {
@@ -17,11 +19,6 @@ const useStyle = makeStyles((theme) => ({
     content: {
         flexGrow: 1,
         padding: theme.spacing(3),
-        transition: theme.transitions.create('margin', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
-        marginLeft: -SIDE_DRAWER_WIDTH,
         background: theme.palette.background.default
     },
     contentShift: {
@@ -38,12 +35,40 @@ const useStyle = makeStyles((theme) => ({
         // necessary for content to be below app bar
         ...theme.mixins.toolbar,
         justifyContent: 'flex-end',
+    },
+    bottomBar: {
+        position: "sticky",
+        bottom: 0
     }
 }));
 
 const Layout: FunctionComponent = ({ children }) => {
     const style = useStyle();
+    const  breakpoint = useScreenWidth();
     const [open, setOpen] = React.useState(true);
+
+    const Navigation_Items: Array<NavigationItems> = [
+        {
+            text: NaviationTitles.NOW_PLAYING,
+            path: NaviationPaths.NOW_PLAYING,
+            icon: <PlayArrowRounded />
+        },
+        {
+            text: NaviationTitles.POPULAR,
+            path: NaviationPaths.POPULAR,
+            icon: <BarChartOutlined />
+        },
+        {
+            text: NaviationTitles.TOP_RATED,
+            path: NaviationPaths.TOP_RATED,
+            icon: <Whatshot />
+        },
+        {
+            text: NaviationTitles.SEARCH,
+            path: NaviationPaths.SEARCH,
+            icon: <SearchOutlined />
+        },
+    ];
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -54,11 +79,12 @@ const Layout: FunctionComponent = ({ children }) => {
     };
 
     return (
+        <>
         <div className={style.root}>
 
             <TopBar isOpen={open} handleDrawerOpen={handleDrawerOpen}></TopBar>
 
-            <SideBar isOpen={open} handleDrawerClose={handleDrawerClose}></SideBar>
+            { breakpoint !== 'xs' && breakpoint !== 'sm' && <SideBar navItems={Navigation_Items} isOpen={open} handleDrawerClose={handleDrawerClose}></SideBar> }
 
             <div className={
                 clsx(style.content, {
@@ -67,8 +93,10 @@ const Layout: FunctionComponent = ({ children }) => {
                 <div className={style.drawerHeader} />
                 {children}
             </div>
-
         </div>
+        { (breakpoint === 'xs' || breakpoint === 'sm') && <div className={style.bottomBar}><BottomBar navItems={Navigation_Items}></BottomBar></div> }
+        </>
+
     )
 }
 

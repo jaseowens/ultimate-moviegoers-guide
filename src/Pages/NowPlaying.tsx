@@ -6,7 +6,7 @@ import { Container, makeStyles, Typography } from "@material-ui/core";
 
 const useStyle = makeStyles((theme) => ({
     pageTitle: {
-        marginBottom: theme.spacing(3),
+        marginBottom: theme.spacing(2),
         color: theme.palette.common.white
     }
 }));
@@ -26,7 +26,7 @@ const NowPlaying = () => {
 
     return (
         <Container>
-            <Typography className={style.pageTitle} variant="h4"> {pageName} </Typography>
+            <Typography className={style.pageTitle} variant="h5"> {pageName} </Typography>
             <MovieList movies={nowPlayingMovies}></MovieList>
         </Container>
     )
