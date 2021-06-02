@@ -31,7 +31,7 @@ const Search = () => {
 
     useEffect(() => {
         const fetchSearch = async () => {
-            if(searchTerm && searchTerm != '') {
+            if(searchTerm && searchTerm !== '') {
                 setSearchResults(await getSearchResults(searchTerm));
             }
         };
