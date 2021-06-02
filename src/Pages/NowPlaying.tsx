@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getNowPlayingMovies } from "../Services/tmdbAPI";
 import { MovieSearchResult } from "../Services/tmdbDTO";
 import MovieList from "../Components/MovieList";
-import { Container, makeStyles, Typography } from "@material-ui/core";
+import { makeStyles, Typography } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { NaviationPaths } from "../Helpers/Constants";
 
@@ -32,10 +32,10 @@ const NowPlaying = () => {
     }
 
     return (
-        <Container>
+        <>
             <Typography className={style.pageTitle} variant="h5"> {pageName} </Typography>
             <MovieList movies={nowPlayingMovies} handleSelect={handleMovieSelect}></MovieList>
-        </Container>
+        </>
     )
 }
 

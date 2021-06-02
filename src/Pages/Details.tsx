@@ -2,23 +2,23 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getMovieDetails } from "../Services/tmdbAPI";
 import { MovieDetails } from "../Services/tmdbDTO";
-import { Container, makeStyles, Typography } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
+import { useScreenWidth } from "../Helpers/ScreenSize";
+import DetailsTopHeader from "../Components/Details/DetailsTopHeader";
 
 interface DetailRouteParams {
     id: string
 }
 
 const useStyle = makeStyles((theme) => ({
-    pageTitle: {
-        marginBottom: theme.spacing(2),
-        color: theme.palette.common.white
-    }
 }));
 
 const Details = () => {
     const { id } = useParams<DetailRouteParams>();
     const [movieDetails, setMovieDetails] = useState<MovieDetails>();
     const style = useStyle();
+    const breakpoint = useScreenWidth();
+
 
     useEffect(() => {
         const fetchDetails = async () => {
@@ -29,10 +29,10 @@ const Details = () => {
     }, [id]);
 
     return (
-        <Container>
-            <Typography className={style.pageTitle} variant="h5"> {movieDetails?.original_title} </Typography>
-            { movieDetails?.overview }
-        </Container>
+        <>
+        <DetailsTopHeader movie={movieDetails}></DetailsTopHeader>
+        { movieDetails?.overview }
+        </>
     )
 }
 

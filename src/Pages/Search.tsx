@@ -1,4 +1,4 @@
-import { Container, makeStyles, Typography } from "@material-ui/core";
+import { makeStyles, Typography } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import MovieList from "../Components/MovieList";
@@ -33,11 +33,10 @@ const Search = () => {
     }
 
     return (
-        <Container>
+        <>
             <Typography className={style.pageTitle} variant="h5"> { pageName } </Typography>
-
             <MovieList movies={searchResults} handleSelect={handleMovieSelect}></MovieList>
-        </Container>
+        </>
     )
 }
 
