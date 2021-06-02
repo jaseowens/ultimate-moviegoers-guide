@@ -119,7 +119,9 @@ const DetailsTopHeader = (props: { movie: MovieDetails | undefined }) => {
 
     return (
         <div>
-        { (props?.movie && props.movie.id) ? 
+        { (props?.movie && props.movie.id) 
+        
+        ? 
             <>
                 <div 
                     className={style.backdrop}
@@ -132,7 +134,7 @@ const DetailsTopHeader = (props: { movie: MovieDetails | undefined }) => {
 
                      <Grid container justify={getJustify()} alignItems="center" className={style.grid}>
                          <Grid item xs={5} sm={5} md={3} lg={2} xl={2}>
-                             <img className={style.poster} src={POSTER_BASE_URL + props?.movie?.poster_path} alt={props?.movie?.original_title} /> :
+                             <img className={style.poster} src={POSTER_BASE_URL + props?.movie?.poster_path} alt={props?.movie?.original_title} />
                          </Grid>
                          <Grid item className={style.movieBrief} xs={8} sm={8} md={9} lg={10} xl={10}>
                              <Typography style={(breakpoint === 'lg' || breakpoint === 'xl') ? {textAlign: 'left'} : {textAlign: 'center'}} className={style.pageTitle} variant="h3"> {props?.movie?.original_title} </Typography>

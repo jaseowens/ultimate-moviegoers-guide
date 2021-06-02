@@ -1,4 +1,4 @@
-import { MovieDetails, MovieSearchResult } from './tmdbDTO';
+import { MovieDetails, MovieSearchResult, ProviderResult } from './tmdbDTO';
 import axios from "axios";
 
 const LANGUAGE = 'en_US';
@@ -19,10 +19,13 @@ const TOP_RATED_URL = `${API_BASE_URL}/movie/top_rated`;
 const DETAILS_URL = `${API_BASE_URL}/movie/`
 
 // https://developers.themoviedb.org/3/search/search-movies
-const SEARCH_URL = `${API_BASE_URL}/search/movie`
+const SEARCH_URL = `${API_BASE_URL}/search/movie`;
+
+// https://developers.themoviedb.org/3/movies/get-movie-watch-providers
+const WATCH_PROVIDERS_URL_PRE = `${API_BASE_URL}/movie/`;
+const WATCH_PROVIDERS_URL_POST = '/watch/providers';
 
 export const getPopularMovies = async (): Promise<MovieSearchResult[]> => {
-    console.log('FETCHING');
     return await axios.get(POPULAR_URL, {
         params: {
             api_key: API_KEY,
@@ -30,7 +33,6 @@ export const getPopularMovies = async (): Promise<MovieSearchResult[]> => {
         }
     }).then(res => {
         if(res?.data?.results) {
-            console.log(res.data.results);
             return res.data.results;
         } else {
             return [];
@@ -50,7 +52,6 @@ export const getNowPlayingMovies = async (): Promise<MovieSearchResult[]> => {
         }
     }).then(res => {
         if(res?.data?.results) {
-            console.log(res.data.results);
             return res.data.results;
         } else {
             return [];
@@ -70,7 +71,6 @@ export const getTopRatedMovies = async (): Promise<MovieSearchResult[]> => {
         }
     }).then(res => {
         if(res?.data?.results) {
-            console.log(res.data.results);
             return res.data.results;
         } else {
             return [];
@@ -83,7 +83,6 @@ export const getTopRatedMovies = async (): Promise<MovieSearchResult[]> => {
 }
 
 export const getMovieDetails = async (id: string): Promise<MovieDetails> => {
-    console.log('Getting details');
     return await axios.get(DETAILS_URL + id, {
         params: {
             api_key: API_KEY,
@@ -91,7 +90,6 @@ export const getMovieDetails = async (id: string): Promise<MovieDetails> => {
         }
     }).then(res => {
         if(res?.data) {
-            console.log(res.data);
             return res.data;
         } else {
             return {};
@@ -104,7 +102,6 @@ export const getMovieDetails = async (id: string): Promise<MovieDetails> => {
 }
 
 export const getSearchResults = async (searchTerm: string): Promise<MovieSearchResult[]> => {
-    console.log('Getting search');
     return await axios.get(SEARCH_URL, {
         params: {
             api_key: API_KEY,
@@ -113,7 +110,6 @@ export const getSearchResults = async (searchTerm: string): Promise<MovieSearchR
         }
     }).then(res => {
         if(res?.data?.results) {
-            console.log(res.data.results);
             return res.data.results;
         } else {
             return {};
@@ -125,3 +121,20 @@ export const getSearchResults = async (searchTerm: string): Promise<MovieSearchR
     });
 }
 
+export const getWatchProviders = async (id: number): Promise<ProviderResult> => {
+    return await axios.get(WATCH_PROVIDERS_URL_PRE + id + WATCH_PROVIDERS_URL_POST, {
+        params: {
+            api_key: API_KEY,
+        }
+    }).then(res => {
+        if(res?.data?.results?.US) {
+            return res.data.results.US;
+        } else {
+            return {};
+        }
+    }).catch(err => {
+        console.log('ERR! ');
+        console.log(err);
+        return {};
+    });
+}

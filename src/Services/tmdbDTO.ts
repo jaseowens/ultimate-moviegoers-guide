@@ -16,6 +16,20 @@ export interface MovieSearchResult {
     vote_average: number;
 }
 
+export interface ProviderResult {
+    link: string,
+    rent: Provider[],
+    buy: Provider[],
+    flatrate: Provider[]
+}
+
+export interface Provider {
+    display_priority?: number,
+    logo_path?: string,
+    provider_id?: number,
+    provider_name: string
+}
+
 export interface Genre {
     id: number,
     name: string
